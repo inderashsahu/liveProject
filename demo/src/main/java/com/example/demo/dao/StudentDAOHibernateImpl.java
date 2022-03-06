@@ -12,11 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.entity.Student;
 
-@Repository		//creates the DAO dependency bean to be injected in REST CONTROLLER 
+@Repository		 
 public class StudentDAOHibernateImpl implements StudentDao {
 	@Autowired
-	public EntityManager entityManager;		//dependency bean(of EntityManager) injected
-	
+	public EntityManager entityManager;		 
 	@Override
 	public List<Student> findAll() {
 //		get current hibernate session
@@ -24,19 +23,17 @@ public class StudentDAOHibernateImpl implements StudentDao {
 //		create a query 
 		List<Student> students=
 				currentSession.createQuery("from Student",Student.class).getResultList();
-//		execute a query and get result list(List type )
-			//	List<Student> students=theQuery.getResultList();
-//		return result
+
 		return students;
 	}
-	@Transactional		//applied while making changes to database
+	@Transactional		 
 	public void save(Student theStudent) {
 		Session currentSession=entityManager.unwrap(Session.class);
 		currentSession.saveOrUpdate(theStudent);
 		
 		
 	}
-	@Transactional		//applied while making changes to database
+	@Transactional		 
 	public void deleteById(int theid) {
 		Session currentSession=entityManager.unwrap(Session.class);
 		Query theQuery=currentSession.createQuery("delete from student where id=:studentId");
